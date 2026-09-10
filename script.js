@@ -16,13 +16,25 @@ const loadlevelword = (lessonId) => {
 const displaylevelword=(words)=>{
 const wordcontainer= document.getElementById("word-container")
 wordcontainer.innerHTML="";
-
+// "id": 4,
+// "level": 5,
+// "word": "Diligent",
+// "meaning": "পরিশ্রমী",
+// "pronunciation": "ডিলিজেন্ট
 words.forEach(word => {
     const card=document.createElement("div")
-    card.innerHTML=`   `
-});
-
-wordcontainer.appendChild(card);
+    card.className = "w-full max-w-sm"
+    card.innerHTML=`<div class="bg-white rounded-xl shadow-sm text-center py-10 px-10 space-y-4">
+            <h2 class="font-bold text-4xl">${word.word}</h2>
+            <p class="font-semibold text-2xl">Meaning/Pronunciation</p>
+            <div class="text-2xl font-semibold">${word.meaning ? word.word : "No meaning found"} / ${word.pronunciation}</div>
+             <div class="flex justify-between">
+            <button class="text-4xl "><i class="fa-solid fa-circle-info"></i></button>
+            <button class="text-4xl"><i class="fa-solid fa-volume"></i></button>
+        </div>
+        </div>   `;
+        wordcontainer.appendChild(card);
+    });
 
 }
 const displaylesson =(lessons)=>{
