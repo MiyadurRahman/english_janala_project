@@ -3,6 +3,13 @@ const loadlesson = () => {
         .then(response => response.json())
         .then(json => displaylesson(json.data));
 }
+//to show the synonyms
+const createelement=(arr)=>
+{
+    const htmlelements=arr.map(el=>  `<span class="btn">${el}</span> `)
+    return(htmlelements.join(" "));//join will create strings
+
+};
 
 const loadlevelword = (lessonId) => {
     const url = `https://openapi.programming-hero.com/api/level/${lessonId}`;
@@ -48,14 +55,19 @@ const displaywordinfo = (word) => {
         <h3 class="text-3xl font-bold mb-2">${word.word}</h3>
         <p class="text-lg"><strong>Meaning:</strong> ${word.meaning}</p>
         <p class="text-lg"><strong>Pronunciation:</strong> ${word.pronunciation}</p>
-        <div class="modal-action">
-            <form method="dialog">
-                <button class="btn">Close</button>
-            </form>
-        </div>
-    `;
+        <p class="text-lg"><strong>Parts of Speech:</strong> ${word.partsOfSpeech}</p>
+        <p class="text-lg"><strong>Sentence:</strong> ${word.sentence}</p>
+        <p class="text-lg"><strong>Points:</strong> ${word.points}</p>
+         <div>
+          <h2 class="font-bold">synonym</h2>
+          <div class=""> ${createelement(word.synonyms)}</div>
+
+         </div>
     
-    document.getElementById("info_modal").showModal();
+        `
+        
+    
+    document.getElementById("info_modal").showModal();// here show modal is default method for dialog
 }
 
 const displaylevelword = (words) => {
