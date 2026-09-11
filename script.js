@@ -4,14 +4,32 @@ const loadlesson = () => {
         .then(json => displaylesson(json.data));
 }
 //to show the synonyms
-const createelement=(arr)=>
-{
-    const htmlelements=arr.map(el=>  `<span class="btn">${el}</span> `)
-    return(htmlelements.join(" "));//join will create strings
+const createelement = (arr) => {
+    const htmlelements = arr.map(el => `<span class="btn">${el}</span> `)
+    return (htmlelements.join(" "));//join will create strings
 
 };
 
+
+
+// spinner
+// toggles the spinner + word container while a lesson loads
+const managespiner = (status) => {
+    if (status == true) {
+        // show spinner, hide words
+        document.getElementById("spinner").classList.remove("hidden")
+        document.getElementById("word-container").classList.add("hidden")
+
+    }
+    else {
+        // hide spinner, show words
+        document.getElementById("word-container").classList.remove("hidden")
+        document.getElementById("spinner").classList.add("hidden")
+    }
+
+}
 const loadlevelword = (lessonId) => {
+    managespiner(true);
     const url = `https://openapi.programming-hero.com/api/level/${lessonId}`;
 
     fetch(url)
@@ -40,7 +58,7 @@ const loadwordinfo = async (id) => {
         const url = `https://openapi.programming-hero.com/api/word/${id}`;
         const res = await fetch(url);
         const details = await res.json();
-        
+
         displaywordinfo(details.data);
     } catch (error) {
         console.error("Failed to load word details:", error);
@@ -49,7 +67,7 @@ const loadwordinfo = async (id) => {
 
 const displaywordinfo = (word) => {
     const infobox = document.getElementById("info-container");
-    
+
     // Inject actual word data instead of "hi"
     infobox.innerHTML = `
         <h3 class="text-3xl font-bold mb-2">${word.word}</h3>
@@ -65,8 +83,8 @@ const displaywordinfo = (word) => {
          </div>
     
         `
-        
-    
+
+
     document.getElementById("info_modal").showModal();// here show modal is default method for dialog
 }
 
@@ -79,6 +97,7 @@ const displaylevelword = (words) => {
         wordcontainer.innerHTML = `<div class="bg-white grid justify-center col-span-full rounded-xl shadow-sm text-center py-10 px-10 space-y-4">
             <h1 class="text-2xl flex justify-center font-bold-700">No vocabulary added here.</h1>
         </div>`;
+        managespiner(false)
         return; // Stops the function here if there are no words
     }
 
@@ -97,6 +116,7 @@ const displaylevelword = (words) => {
         </div>`;
         wordcontainer.appendChild(card);
     });
+    managespiner(false)
 }
 
 const displaylesson = (lessons) => {
