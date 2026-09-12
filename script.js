@@ -26,8 +26,9 @@ const managespiner = (status) => {
         document.getElementById("word-container").classList.remove("hidden")
         document.getElementById("spinner").classList.add("hidden")
     }
+//
+}//will load levelword
 
-}
 const loadlevelword = (lessonId) => {
     managespiner(true);
     const url = `https://openapi.programming-hero.com/api/level/${lessonId}`;
