@@ -26,8 +26,9 @@ const managespiner = (status) => {
         document.getElementById("word-container").classList.remove("hidden")
         document.getElementById("spinner").classList.add("hidden")
     }
-//
+
 }//will load levelword
+
 
 const loadlevelword = (lessonId) => {
     managespiner(true);
@@ -135,3 +136,17 @@ const displaylesson = (lessons) => {
 }
 
 loadlesson();
+document.getElementById("search-button").addEventListener("click",()=>{
+
+const input=document.getElementById("input")
+const inputvalue=input.value.trim().toLocaleLowerCase()
+
+ fetch('https://openapi.programming-hero.com/api/words/all')
+        .then(response => response.json())
+        .then(json =>{
+        const allwords=json.data
+        const filterword=allwords.filter(word=>word.word.toLocaleLowerCase().includes(inputvalue))
+     displaylevelword(filterword)
+        } )
+
+});
